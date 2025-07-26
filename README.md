@@ -1,2 +1,2 @@
 # PhytoScan
-for hackathon
+for Hackathon
