@@ -1,4 +1,6 @@
-names:
-  0: disease
-path: .
-train: train.txt
+train: /content/Disease_Annotated_YOLO_Segmentation/images/train
+val: /content/Disease_Annotated_YOLO_Segmentation/images/test
+
+nc: 1  # number of classes
+
+names: ['disease']

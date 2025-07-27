@@ -1,4 +1,6 @@
-names:
-  0: Insect
-path: .
-train: train.txt
+train: /content/Insect_Annotated_YOLO_Detection/images/train
+val: /content/Insect_Annotated_YOLO_Detection/images/test
+
+nc: 1  # number of classes
+
+names: ['insect']
