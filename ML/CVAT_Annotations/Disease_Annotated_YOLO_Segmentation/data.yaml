@@ -1,0 +1,4 @@
+names:
+  0: disease
+path: .
+train: train.txt
