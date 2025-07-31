@@ -5,13 +5,13 @@ import pandas as pd
 import os
 
 # === FILE PATHS ===
-image_path = "test_leaf.jpg"
-disease_csv_path = "disease_answers.csv"
-insect_csv_path = "insect_answers.csv"
-yolo_disease_model_path = "runs/segment/disease-segmentation/weights/best.pt"
-yolo_insect_model_path = "runs/detect/insect-detection/weights/best.pt"
-tabnet_disease_model_path = "crop_disease.zip"
-tabnet_insect_model_path = "crop_insect.zip"
+image_path = "../Sample_Input/testleaf.jpg"
+disease_csv_path = "../Sample_Input/Crop_Disease_TrainingData.csv"
+insect_csv_path = "../Sample_Input/Crop_Insect_TrainingData.csv"
+yolo_disease_model_path = "../Trained_Model/Disease/best.pt"
+yolo_insect_model_path = "../Trained_Model/Insect/best.pt"
+tabnet_disease_model_path = "../Trained_Model/Tabnet-Disease/crop_disease.zip"
+tabnet_insect_model_path = "../Trained_Model/Tabnet-Insect/crop_insect.zip"
 
 # === CHECK FILES EXIST ===
 required_files = [

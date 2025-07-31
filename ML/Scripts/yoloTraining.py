@@ -1,6 +1,6 @@
 from ultralytics import YOLO
 
-disease_yaml_path = "ML/CVAT_Annotations/Disease_Annotated_YOLO_Segmentation/data.yaml"
+disease_yaml_path = "../CVAT_Annotations/Disease_Annotated_YOLO_Segmentation/data.yaml"
 
 
 # Load YOLOv8 segmentation model
@@ -13,6 +13,7 @@ disease_model.train(
     imgsz=640,
     batch=16,
     name='disease-segmentation',
+    project='../Trained_Model',
     augment=True,
     degrees=10,       # random rotation
     scale=0.5,        # scale up/down
@@ -27,7 +28,7 @@ disease_model.train(
 )
 
 
-insect_yaml_path = "ML/CVAT_Annotations/Insect_Annotated_YOLO_Detection/data.yaml"
+insect_yaml_path = "../CVAT_Annotations/Insect_Annotated_YOLO_Detection/data.yaml"
 
 # Load YOLOv8 detection model
 insect_model = YOLO('yolov8s.pt')
@@ -39,6 +40,7 @@ insect_model.train(
     imgsz=640,
     batch=16,
     name='insect-detection',
+    project='../Trained_Model',
     augment=True,
     degrees=15,
     translate=0.1,
@@ -55,14 +57,14 @@ insect_model.train(
 
 
 # Load the trained model (make sure to load the best weights)
-disease_model = YOLO('ML/Trained_Model/Disease/best.pt')
+disease_model = YOLO('../Trained_Model/Disease/best.pt')
 
 # Validate using the test set (defined in data.yaml as val path)
 disease_metrics = disease_model.val(data=disease_yaml_path)
 
 
 # Load the trained model (best weights)
-insect_model = YOLO('ML/Trained_Model/Insect/best.pt')
+insect_model = YOLO('../Trained_Model/Insect/best.pt')
 
 # Validate using the test set (defined in data.yaml as val path)
 insect_metrics = insect_model.val(data=insect_yaml_path)

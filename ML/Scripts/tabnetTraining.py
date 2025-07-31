@@ -7,13 +7,10 @@ from pytorch_tabnet.tab_model import TabNetClassifier
 import torch
 
 # === LOAD CSV FILES ===
-disease_char_path = "Crop_Disease_Characteristics.csv"
-insect_char_path = "Crop_Insect_Characteristics.csv"
-disease_train_path = "Crop_Disease_TrainingData.csv"
-insect_train_path = "Crop_Insect_TrainingData.csv"
+disease_train_path = "../Sample_Input/Crop_Disease_TrainingData.csv"
+insect_train_path = "../Sample_Input/Crop_Insect_TrainingData.csv"
 
 required_files = [
-    disease_char_path, insect_char_path,
     disease_train_path, insect_train_path
 ]
 
@@ -23,8 +20,6 @@ for file in required_files:
 print("✅ All CSV files found.")
 
 # === READ DATA ===
-disease_char = pd.read_csv(disease_char_path)
-insect_char = pd.read_csv(insect_char_path)
 disease_train = pd.read_csv(disease_train_path)
 insect_train = pd.read_csv(insect_train_path)
 
@@ -73,8 +68,10 @@ def train_tabnet(X, y, model_name):
 
     # Save model
     model_filename = model_name.replace(" ", "_").lower()  # e.g., crop_disease
-    clf.save_model(model_filename)
-    print(f"💾 Model saved as: {model_filename}.zip")
+    save_path = f"../Trained_Model/Tabnet-{model_name.split()[1]}/{model_filename}.zip"
+    os.makedirs(os.path.dirname(save_path), exist_ok=True)
+    clf.save_model(save_path)
+    print(f"💾 Model saved as: {save_path}")
 
     return clf
 
