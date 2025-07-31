@@ -1,19 +1,34 @@
-# === IMPORTS ===
 import pandas as pd
 import numpy as np
+import os
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, classification_report
 from pytorch_tabnet.tab_model import TabNetClassifier
 import torch
-from google.colab import files
 
-# === LOAD ALL 4 CSVs ===
-disease_char = pd.read_csv("Crop_Disease_Characteristics.csv")
-insect_char = pd.read_csv("Crop_Insect_Characteristics.csv")
-disease_train = pd.read_csv("Crop_Disease_TrainingData.csv")
-insect_train = pd.read_csv("Crop_Insect_TrainingData.csv")
+# === LOAD CSV FILES ===
+disease_char_path = "Crop_Disease_Characteristics.csv"
+insect_char_path = "Crop_Insect_Characteristics.csv"
+disease_train_path = "Crop_Disease_TrainingData.csv"
+insect_train_path = "Crop_Insect_TrainingData.csv"
 
-# === ENCODE YES/NO AS 1/0 ===
+required_files = [
+    disease_char_path, insect_char_path,
+    disease_train_path, insect_train_path
+]
+
+for file in required_files:
+    if not os.path.exists(file):
+        raise FileNotFoundError(f"❌ Missing file: {file}")
+print("✅ All CSV files found.")
+
+# === READ DATA ===
+disease_char = pd.read_csv(disease_char_path)
+insect_char = pd.read_csv(insect_char_path)
+disease_train = pd.read_csv(disease_train_path)
+insect_train = pd.read_csv(insect_train_path)
+
+# === ENCODE YES/NO TO 1/0 ===
 def encode_boolean(df):
     return df.replace({'Yes': 1, 'No': 0})
 
@@ -26,9 +41,9 @@ def prepare_xy(df, label_col="disease_present"):
     y = df[label_col].replace({'Yes': 1, 'No': 0}) if df[label_col].dtype == object else df[label_col]
     return X.values, y.values
 
-# === TRAIN TABNET CLASSIFIER & SAVE ===
+# === TRAIN TABNET MODEL ===
 def train_tabnet(X, y, model_name):
-    print(f"\n🔧 Training {model_name} model...")
+    print(f"\n🔧 Training {model_name}...")
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
     clf = TabNetClassifier(verbose=0, seed=42, device_name='cuda' if torch.cuda.is_available() else 'cpu')
@@ -51,19 +66,19 @@ def train_tabnet(X, y, model_name):
     print("🧾 Classification Report:\n", classification_report(y_test, y_pred))
 
     # Sample inference
-    print(f"\n🔍 {model_name} Sample Inference:")
+    print(f"\n🔍 Sample Inference for {model_name}:")
     sample_input = X_test[0].reshape(1, -1)
     prediction = clf.predict(sample_input)[0]
     print("→ Prediction:", "PRESENT" if prediction == 1 else "NOT PRESENT")
 
-    # === SAVE MODEL ===
-    model_filename = model_name.replace(" ", "_").lower()  # e.g., "crop_disease"
+    # Save model
+    model_filename = model_name.replace(" ", "_").lower()  # e.g., crop_disease
     clf.save_model(model_filename)
-    print(f"💾 Model saved to {model_filename}.zip")
+    print(f"💾 Model saved as: {model_filename}.zip")
 
     return clf
 
-# === RUN BOTH MODELS ===
+# === RUN TRAINING ===
 X_disease, y_disease = prepare_xy(disease_train, label_col="disease_present")
 X_insect, y_insect = prepare_xy(insect_train, label_col="insect_present")
 
