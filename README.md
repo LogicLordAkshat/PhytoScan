@@ -29,8 +29,7 @@
     - [🧩 Overview](#-overview)
     - [📊 Final Output Decision Logic](#-final-output-decision-logic)
     - [🖼️ Architecture Diagram](#️-architecture-diagram)
-  - [5. Implementation Code (Placeholder)](#5-implementation-code-placeholder)
-    - [File structure (to be finalized):](#file-structure-to-be-finalized)
+  - [5. Implementation Code](#5-implementation-code)
   - [6. Running the Application End-to-End](#6-running-the-application-end-to-end)
   - [7. Output Screenshots \& Evaluation Metrics](#7-output-screenshots--evaluation-metrics)
     - [📈 YOLOv8s-seg (Crop Disease Segmentation)](#-yolov8s-seg-crop-disease-segmentation)
@@ -47,10 +46,7 @@ We used **CVAT (Computer Vision Annotation Tool) in Offline Mode** for all image
 
 ### ⚙️ System Configuration
 
-* OS: **Windows 11 (64-bit)**
-* Virtualization: **Docker Desktop (WSL2 backend)**
-* RAM: 16 GB
-* CPU: 8 Cores
+* Virtualization: **Docker Desktop**
 * GPU: Colab (used only for training, not local)
 
 ### 📦 Installation Steps
@@ -99,10 +95,10 @@ We used **CVAT (Computer Vision Annotation Tool) in Offline Mode** for all image
 
 ### 🧠 Annotation Process
 
-| Step | Task         | Annotation Type      | Tool |
-| ---- | ------------ | -------------------- | ---- |
-| 1    | Crop Disease | Polygon segmentation | CVAT |
-| 2    | Crop Insect  | Bounding box         | CVAT |
+| Step | Task         | Annotation Type | Tool |
+| ---- | ------------ | --------------- | ---- |
+| 1    | Crop Disease | Polygon Tool    | CVAT |
+| 2    | Crop Insect  | Rectangle Tool  | CVAT |
 
 Each image was manually annotated to ensure:
 
@@ -119,10 +115,8 @@ Each image was manually annotated to ensure:
 
 ## 3. Annotated Dataset Download Links
 
-* [🔗 Crop Disease Annotated Dataset (Google Drive)](https://your-link-here.com)
-* [🔗 Crop Insect Annotated Dataset (Google Drive)](https://your-link-here.com)
-
-(*Replace with your actual links before submission*)
+* [🔗 Crop Disease Annotated Dataset (Google Drive)](https://drive.google.com/drive/folders/1S2R3ZaF5d2iSmSAVzE-byo8Xkaeel_1G?usp=sharing)
+* [🔗 Crop Insect Annotated Dataset (Google Drive)](https://drive.google.com/drive/folders/1DLnJYGHeuzp_QaH2joYdvDAWyxmpIzLL?usp=sharing)
 
 ---
 
@@ -192,30 +186,10 @@ The fusion logic is **rule-based**:
 
 ---
 
-## 5. Implementation Code (Placeholder)
+## 5. Implementation Code
 
-> ⚠️ All code was written and executed in **Google Colab** and will be organized prior to final submission.
-
-### File structure (to be finalized):
-
-```
-PhytoScan/
-├── disease_model/
-│   ├── train_segmentation.py
-│   └── yolo_config.yaml
-├── insect_model/
-│   ├── train_detection.py
-│   └── yolo_config.yaml
-├── tabnet_disease/
-│   ├── tabnet_disease.py
-│   └── crop_disease_characteristics.csv
-├── tabnet_insect/
-│   ├── tabnet_insect.py
-│   └── crop_insect_characteristics.csv
-├── fusion/
-│   └── decision_fusion.py
-└── README.md
-```
+[🔗 PhytoScan.ipynb (Google Colab Notebook)](https://colab.research.google.com/drive/169A-vgNdpkvm-firindRUGsQG5EWpnCr?usp=sharing)
+[🔗 GitHub Repository (Mo-Kash/PhytoScan)](https://github.com/Mo-Kash/PhytoScan)
 
 ---
 
@@ -223,26 +197,11 @@ PhytoScan/
 
 All components can be run from the terminal sequentially. No GUI is required.
 
-```bash
-# 1. Train or Load YOLOv8s-seg for Disease Segmentation
-python disease_model/train_segmentation.py
-
-# 2. Train or Load YOLOv8s for Insect Detection
-python insect_model/train_detection.py
-
-# 3. Predict Disease from Symptom CSV using TabNet
-python tabnet_disease/tabnet_disease.py
-
-# 4. Predict Insect from Symptom CSV using TabNet
-python tabnet_insect/tabnet_insect.py
-
-# 5. Fuse All Outputs
-python fusion/decision_fusion.py
-```
-
 ---
 
 ## 7. Output Screenshots & Evaluation Metrics
+
+![Final Output](Output.jpeg)
 
 ### 📈 YOLOv8s-seg (Crop Disease Segmentation)
 
