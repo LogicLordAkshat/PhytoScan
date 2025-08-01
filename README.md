@@ -188,7 +188,7 @@ The fusion logic is **rule-based**:
 
 ## 5. Implementation Code
 
-[🔗 PhytoScan.ipynb (Google Colab Notebook)](https://colab.research.google.com/drive/169A-vgNdpkvm-firindRUGsQG5EWpnCr?usp=sharing)
+[🔗 PhytoScan.ipynb (Google Colab Notebook)](https://colab.research.google.com/drive/169A-vgNdpkvm-firindRUGsQG5EWpnCr?usp=sharing)<br>
 [🔗 GitHub Repository (Mo-Kash/PhytoScan)](https://github.com/Mo-Kash/PhytoScan)
 
 ---
