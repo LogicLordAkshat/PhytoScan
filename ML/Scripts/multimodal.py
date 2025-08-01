@@ -5,13 +5,13 @@ import pandas as pd
 import os
 
 # === FILE PATHS ===
-image_path = "../Sample_Input/testleaf.jpg"
-disease_csv_path = "../Sample_Input/Crop_Disease_TrainingData.csv"
-insect_csv_path = "../Sample_Input/Crop_Insect_TrainingData.csv"
-yolo_disease_model_path = "../Trained_Model/Disease/best.pt"
-yolo_insect_model_path = "../Trained_Model/Insect/best.pt"
-tabnet_disease_model_path = "../Trained_Model/Tabnet-Disease/crop_disease.zip"
-tabnet_insect_model_path = "../Trained_Model/Tabnet-Insect/crop_insect.zip"
+image_path = "ML/Sample_Input/testleaf.jpg"
+disease_csv_path = "ML/Sample_Input/disease_sample.csv"
+insect_csv_path = "ML/Sample_Input/insect_sample.csv"
+yolo_disease_model_path = "ML/Trained_Model/Disease/best.pt"
+yolo_insect_model_path = "ML/Trained_Model/Insect/best.pt"
+tabnet_disease_model_path = "ML/Trained_Model/Tabnet-Disease/crop_disease.zip"
+tabnet_insect_model_path = "ML/Trained_Model/Tabnet-Insect/crop_insect.zip"
 
 # === CHECK FILES EXIST ===
 required_files = [
@@ -41,23 +41,37 @@ clf_disease.load_model(tabnet_disease_model_path)
 clf_insect = TabNetClassifier()
 clf_insect.load_model(tabnet_insect_model_path)
 
-# === CSV INFERENCE ===
-df_disease = pd.read_csv(disease_csv_path)
-X_disease = df_disease.drop(columns=["Label", "leaf_id"], errors="ignore").values
-tabnet_disease_pred = clf_disease.predict(X_disease)
-disease_present_tabnet = bool(tabnet_disease_pred[0])
+import numpy as np
 
-df_insect = pd.read_csv(insect_csv_path)
-X_insect = df_insect.drop(columns=["Label", "leaf_id"], errors="ignore").values
-tabnet_insect_pred = clf_insect.predict(X_insect)
-insect_present_tabnet = bool(tabnet_insect_pred[0])
+# === FILE PATHS ===
+model_path = "ML/Trained_Model/Tabnet-Disease/crop_disease.zip"
+sample_csv_path = "ML/Sample_Input/disease_sample.csv"
+df_sample = pd.read_csv(sample_csv_path)
+df_sample = df_sample.replace({"Yes": 1, "No": 0})
+X_sample = df_sample.fillna(0).astype(np.float32).values
+clf = TabNetClassifier()
+clf.load_model(model_path)
+pred = clf.predict(X_sample)
+is_diseased = bool(pred[0])  # True if 1, False if 0
+
+# === INSECT CSV INFERENCE ===
+model_path = "ML/Trained_Model/Tabnet-Insect/crop_insect.zip"
+sample_csv_path = "ML/Sample_Input/insect_sample.csv"
+df_sample = pd.read_csv(sample_csv_path)
+df_sample = df_sample.replace({"Yes": 1, "No": 0})
+X_sample = df_sample.fillna(0).astype(np.float32).values
+clf = TabNetClassifier()
+clf.load_model(model_path)
+pred = clf.predict(X_sample)
+is_insect = bool(pred[0])  # True if 1, False if 0
+
 
 # === FINAL MULTIMODAL OUTPUT ===
 final_output = {
     "Disease_Present_YOLO": disease_present_yolo,
     "Insect_Present_YOLO": insect_present_yolo,
-    "Disease_Present_TabNet": disease_present_tabnet,
-    "Insect_Present_TabNet": insect_present_tabnet
+    "Disease_Present_TabNet": is_diseased,
+    "Insect_Present_TabNet": is_insect
 }
 
 final_decision = {

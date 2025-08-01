@@ -7,8 +7,8 @@ from pytorch_tabnet.tab_model import TabNetClassifier
 import torch
 
 # === LOAD CSV FILES ===
-disease_train_path = "../Sample_Input/Crop_Disease_TrainingData.csv"
-insect_train_path = "../Sample_Input/Crop_Insect_TrainingData.csv"
+disease_train_path = "ML/Dataset/Crop_Disease_TrainingData.csv"
+insect_train_path = "ML/Dataset/Crop_Insect_TrainingData.csv"
 
 required_files = [
     disease_train_path, insect_train_path
