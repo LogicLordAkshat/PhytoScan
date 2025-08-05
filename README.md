@@ -1,17 +1,5 @@
 # 🌿 PhytoScan — A Multimodal Plant Health Diagnostic System
 
-### Round-1 Hackathon Submission
-
-**Project Name:** **PhytoScan**
-**Team Members:**
-
-* Anoop Nair
-* Akshat Srivastava
-* Mohit Kashyap
-* Parth Mital
-
----
-
 ## 📝 Index
 
 - [🌿 PhytoScan — A Multimodal Plant Health Diagnostic System](#-phytoscan--a-multimodal-plant-health-diagnostic-system)
