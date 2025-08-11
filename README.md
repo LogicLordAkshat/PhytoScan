@@ -102,7 +102,6 @@ Each image was manually annotated to ensure:
 ---
 
 ## 3. Annotated Dataset Download Links
-
 * [🔗 Crop Disease Annotated Dataset (Google Drive)](https://drive.google.com/drive/folders/1S2R3ZaF5d2iSmSAVzE-byo8Xkaeel_1G?usp=sharing)
 * [🔗 Crop Insect Annotated Dataset (Google Drive)](https://drive.google.com/drive/folders/1DLnJYGHeuzp_QaH2joYdvDAWyxmpIzLL?usp=sharing)
 
